@@ -1,2 +1,2 @@
-# tags
-This is for managing my tags.
+# Tags
+These are the tags applied across everything.

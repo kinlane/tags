@@ -1,0 +1,83 @@
+name: Tags  
+on: [push]
+jobs:
+  deploy_source:
+    name: Deploy API Using Lambda
+    strategy:
+      matrix:
+        node-version: [12.x]
+    runs-on: ubuntu-latest
+    steps:
+    
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install and build
+        run: |
+          npm ci
+          npm run build --if-present
+        env:
+          CI: true
+
+      - name: /tags get lambda deploy zip
+        uses: kinlane/tags@main
+        with:
+            args: zip -qq -r m-s-tags-g.zip tags/get/index.js node_modules
+      - name: videos get lambda deploy
+        uses: appleboy/lambda-action@master
+        with:
+            aws_access_key_id: ${{secrets.AWS_ACCESS_KEY_ID}}
+            aws_secret_access_key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+            aws_region: us-west-1
+            function_name: m-s-tags-g
+            zip_file: m-s-tags-g.zip
+      - name: /tags post lambda deploy zip
+        uses: kinlane/tags@main
+        with:
+            args: zip -qq -r m-s-tags-po.zip tags/post/index.js node_modules
+      - name: videos get lambda deploy
+        uses: appleboy/lambda-action@master
+        with:
+            aws_access_key_id: ${{secrets.AWS_ACCESS_KEY_ID}}
+            aws_secret_access_key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+            aws_region: us-west-1
+            function_name: m-s-tags-po
+            zip_file: m-s-tags-po.zip
+      - name: /tags/{tag_id} get lambda deploy zip
+        uses: kinlane/tags@main
+        with:
+            args: zip -qq -r m-s-tags-tag-g.zip tags/tag_id/get/index.js node_modules
+      - name: videos get lambda deploy
+        uses: appleboy/lambda-action@master
+        with:
+            aws_access_key_id: ${{secrets.AWS_ACCESS_KEY_ID}}
+            aws_secret_access_key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+            aws_region: us-west-1
+            function_name: m-s-tags-tag-g
+            zip_file: m-s-tags-tag-g.zip
+      - name: /tags/{tag_id} put lambda deploy zip
+        uses: kinlane/tags@main
+        with:
+            args: zip -qq -r m-s-tags-tag-pu.zip tags/tag_id/put/index.js node_modules
+      - name: videos get lambda deploy
+        uses: appleboy/lambda-action@master
+        with:
+            aws_access_key_id: ${{secrets.AWS_ACCESS_KEY_ID}}
+            aws_secret_access_key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+            aws_region: us-west-1
+            function_name: m-s-tags-tag-pu
+            zip_file: m-s-tags-tag-pu.zip
+      - name: /tags/{tag_id} delete lambda deploy zip
+        uses: kinlane/tags@main
+        with:
+            args: zip -qq -r m-s-tags-tag-d.zip tags/tag_id/delete/index.js node_modules
+      - name: videos get lambda deploy
+        uses: appleboy/lambda-action@master
+        with:
+            aws_access_key_id: ${{secrets.AWS_ACCESS_KEY_ID}}
+            aws_secret_access_key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+            aws_region: us-west-1
+            function_name: m-s-tags-tag-d
+            zip_file: m-s-tags-tag-d.zip          
