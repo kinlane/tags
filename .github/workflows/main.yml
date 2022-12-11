@@ -30,7 +30,7 @@ jobs:
         with:
             aws_access_key_id: ${{secrets.AWS_ACCESS_KEY_ID}}
             aws_secret_access_key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-            aws_region: us-west-1
+            aws_region: us-east-1
             function_name: m-s-tags-g
             zip_file: m-s-tags-g.zip
       - name: /tags post lambda deploy zip
@@ -42,7 +42,7 @@ jobs:
         with:
             aws_access_key_id: ${{secrets.AWS_ACCESS_KEY_ID}}
             aws_secret_access_key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-            aws_region: us-west-1
+            aws_region: us-east-1
             function_name: m-s-tags-po
             zip_file: m-s-tags-po.zip
       - name: /tags/{tag_id} get lambda deploy zip
@@ -54,7 +54,7 @@ jobs:
         with:
             aws_access_key_id: ${{secrets.AWS_ACCESS_KEY_ID}}
             aws_secret_access_key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-            aws_region: us-west-1
+            aws_region: us-east-1
             function_name: m-s-tags-tag-g
             zip_file: m-s-tags-tag-g.zip
       - name: /tags/{tag_id} put lambda deploy zip
@@ -66,7 +66,7 @@ jobs:
         with:
             aws_access_key_id: ${{secrets.AWS_ACCESS_KEY_ID}}
             aws_secret_access_key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-            aws_region: us-west-1
+            aws_region: us-east-1
             function_name: m-s-tags-tag-pu
             zip_file: m-s-tags-tag-pu.zip
       - name: /tags/{tag_id} delete lambda deploy zip
@@ -78,6 +78,6 @@ jobs:
         with:
             aws_access_key_id: ${{secrets.AWS_ACCESS_KEY_ID}}
             aws_secret_access_key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-            aws_region: us-west-1
+            aws_region: us-east-1
             function_name: m-s-tags-tag-d
             zip_file: m-s-tags-tag-d.zip          
